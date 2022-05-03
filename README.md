@@ -1,1 +1,1 @@
-# go-swaggo
+# go-swaggo-api
