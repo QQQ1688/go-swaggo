@@ -25,7 +25,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/iplogs/{id}": {
+        "/iplogs": {
             "get": {
                 "description": "get string by IP",
                 "consumes": [
@@ -42,12 +42,96 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "format": "email",
-                        "description": "name search by q",
+                        "description": "iplogs search by q",
                         "name": "ip",
                         "in": "query"
                     }
                 ],
                 "responses": {}
+            },
+            "post": {
+                "description": "add by json body",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "iplogs"
+                ],
+                "summary": "Add an Ip",
+                "parameters": [
+                    {
+                        "description": "Add iplogs",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Ip"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httputil.HTTPError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "message": {
+                    "type": "string",
+                    "example": "status bad request"
+                }
+            }
+        },
+        "model.Ip": {
+            "type": "object",
+            "properties": {
+                "IP": {
+                    "description": "json 回傳時IP 的 Key 對應到 IP",
+                    "type": "string"
+                },
+                "時間": {
+                    "description": "json 回傳時Time 的 Key 對應到 時間",
+                    "type": "string"
+                },
+                "狀態": {
+                    "type": "number"
+                },
+                "網址": {
+                    "type": "string"
+                }
             }
         }
     },

@@ -1,4 +1,27 @@
 basePath: /api/v1
+definitions:
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  model.Ip:
+    properties:
+      IP:
+        description: json 回傳時IP 的 Key 對應到 IP
+        type: string
+      時間:
+        description: json 回傳時Time 的 Key 對應到 時間
+        type: string
+      狀態:
+        type: number
+      網址:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -13,13 +36,13 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
-  /iplogs/{id}:
+  /iplogs:
     get:
       consumes:
       - application/json
       description: get string by IP
       parameters:
-      - description: name search by q
+      - description: iplogs search by q
         format: email
         in: query
         name: ip
@@ -28,6 +51,39 @@ paths:
       - application/json
       responses: {}
       summary: Show a IP
+      tags:
+      - iplogs
+    post:
+      consumes:
+      - application/json
+      description: add by json body
+      parameters:
+      - description: Add iplogs
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/model.Ip'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Add an Ip
       tags:
       - iplogs
 securityDefinitions:
