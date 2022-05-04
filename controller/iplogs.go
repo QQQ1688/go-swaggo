@@ -16,7 +16,7 @@ import (
 // which username and passwd are default setting
 const (
 	USERNAME = "root"
-	PASSWORD = "dc0906708652"
+	PASSWORD = "demo123"
 	NETWORK  = "tcp"
 	SERVER   = "127.0.0.1"
 	PORT     = 3306
